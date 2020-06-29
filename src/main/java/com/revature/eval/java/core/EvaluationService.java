@@ -21,8 +21,14 @@ public class EvaluationService {
 	static class SpeedConverter {
 
 		public static long toMilesPerHour(double kilometersPerHour) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+			if (kilometersPerHour <= 0) {
+				return -1;
+			}
+			else {
+				long milesPerHour = Math.round(kilometersPerHour * .6);
+				return milesPerHour;
+			}
+			
 		}
 
 		/**
