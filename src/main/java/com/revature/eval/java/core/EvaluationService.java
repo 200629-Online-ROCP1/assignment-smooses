@@ -140,6 +140,7 @@ public class EvaluationService {
 	 * 
 	 * Otherwise, return false;
 	 */
+	//TODO: Fix
 	public boolean areEqualByThreeDecimalPlaces(double firstNum, double secondNum) {
 		double scale = Math.pow(10, 3);
 		if (firstNum*scale == secondNum*scale) {
@@ -163,16 +164,19 @@ public class EvaluationService {
 	static class TeenNumberChecker {
 
 		public static boolean hasTeen(int x, int y, int z) {
-			// TODO Write an implementation for this method declaration
-			return false;
+			return isTeen(x) || isTeen(y) || isTeen(z);
 		}
 
 		// We can initialize isTeen method first
 		// Then pass the parameter to hasTeen method
 
 		public static boolean isTeen(int number) {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if (number >= 13 && number <= 19) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 	}
 
@@ -192,8 +196,14 @@ public class EvaluationService {
 	 * ZZ represents the calculated days.
 	 */
 	public String printYearsAndDays(long minutes) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		int years = 0; 
+		int days = (int) (minutes/(60*24));
+		while (days >= 365) {
+			years++;
+			days-=365;
+		}
+		
+		return minutes +" min = " + years + " y and " + days + " d";
 	}
 
 	/**
@@ -206,8 +216,30 @@ public class EvaluationService {
 	 * statement or switch statement whatever is easier for you.
 	 */
 	public String printNumberInWord(int number) {
-		// TODO Write an implementation for this method declaration
-		return null;
+			switch(number) {
+			case 0:
+				return "ZERO";
+			case 1:
+				return "ONE";
+			case 2:
+				return "TWO";
+			case 3:
+				return "THREE";
+			case 4:
+				return "FOUR";
+			case 5:
+				return "FIVE";
+			case 6:
+				return "SIX";
+			case 7:
+				return "SEVEN";
+			case 8:
+				return "EIGHT";
+			case 9:
+				return "NINE";
+			default:
+				return "OTHER";
+			}
 	}
 
 	/**
@@ -230,8 +262,28 @@ public class EvaluationService {
 	 * and there is no resulting remainder.
 	 */
 	public int getGreatestCommonDivisor(int first, int second) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		int gcd = 0;
+		if (first < 10 || second < 10) {
+			return -1;
+		}
+		else if (first == second) {
+			return first;
+		}
+		else if (first > second){
+			for (int i=1; i<=second; i++) {
+				if (first%i==0 && second%i==0) {
+					gcd=i;
+				}
+			}
+		}
+		else {
+			for (int i=1; i<=first; i++) {
+				if (first%i==0 && second%i==0) {
+					gcd=i;
+				}
+			}
+		}
+		return gcd;
 	}
 
 	/**
@@ -247,9 +299,19 @@ public class EvaluationService {
 	 * If the number is negative then the method needs to return -1 to indicate an
 	 * invalid value.
 	 */
+	//TODO: Fix
 	public int sumFirstAndLastDigit(int num) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		int first, last, sum;
+		if (num < 0) {
+			return -1;
+		}
+		else {
+			String numString = String.valueOf(num);
+			first = (int) (numString.charAt(0));
+			last = (int) (numString.charAt(numString.length()-1));
+			sum = first + last;
+		}
+		return sum;
 	}
 
 	/**
@@ -259,8 +321,11 @@ public class EvaluationService {
 	 * reverses a String. Example: reverse("example"); -> "elpmaxe"
 	 */
 	public String reverse(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String revString = new String();
+		for (int i = string.length()-1; i >= 0; i--) {
+			revString = revString + string.charAt(i);
+		}
+		return revString;
 	}
 
 	/**
@@ -271,8 +336,12 @@ public class EvaluationService {
 	 * long name like Portable Network Graphics to its acronym (PNG).
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String[] splat = phrase.split(" |-");
+		String acronym = new String();
+		for (int i = 0; i < splat.length; i++) {
+			acronym = acronym + splat[i].charAt(0);
+		}
+		return acronym.toUpperCase();
 	}
 
 	/**
@@ -327,18 +396,30 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if (this.sideOne == this.sideTwo && this.sideTwo == this.sideThree) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if (this.sideOne == this.sideTwo || this.sideTwo == this.sideThree || this.sideOne == this.sideThree) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if (this.sideOne != this.sideTwo && this.sideTwo != this.sideThree && this.sideOne != this.sideThree) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 
 	}
@@ -358,8 +439,54 @@ public class EvaluationService {
 	 * 3 + 2*1 + 2*3 + 2 + 1 = 3 + 2 + 6 + 3 = 5 + 9 = 14
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		int total = 0;
+		for (int i = 0; i < string.length(); i++) {
+			switch (string.toUpperCase().charAt(i)) {
+			case 'A':
+			case 'E':
+			case 'I':
+			case 'O':
+			case 'U':
+			case 'L':
+			case 'N':
+			case 'R':
+			case 'S':
+			case 'T':
+				total++;
+				break;
+			case 'D':
+			case 'G':
+				total+=2;
+				break;
+			case 'B':
+			case 'C':
+			case 'M':
+			case 'P':
+				total+=3;
+				break;
+			case 'F':
+			case 'H':
+			case 'V':
+			case 'W':
+			case 'Y':
+				total+=4;
+				break;
+			case 'K':
+				total+=5;
+				break;
+			case 'J':
+			case 'X':
+				total+=8;
+				break;
+			case 'Q':
+			case 'Z':
+				total+=10;
+				break;
+			default:
+				break;
+			}
+		}
+		return total;
 	}
 
 	/**
