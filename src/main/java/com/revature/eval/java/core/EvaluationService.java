@@ -47,8 +47,14 @@ public class EvaluationService {
 		 * Value"
 		 */
 		public static String printConversion(double kilometersPerHour) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			if (kilometersPerHour <= 0) {
+				return "Invalid Value";
+			}
+			else {
+			long milesPerHour = toMilesPerHour(kilometersPerHour);
+			String conversionString = kilometersPerHour + " km/h = " + milesPerHour + " mi/h";
+			return conversionString;
+			}
 		}
 	}
 
@@ -72,9 +78,21 @@ public class EvaluationService {
 	 * If the parameter kiloBytes is less than 0 then print the text "Invalid
 	 * Value".
 	 */
-	public String printMegaBytesAndKiloBytes(int XX) {
-		// TODO Write an implementation for this method declaration
-		return null;
+	public String printMegaBytesAndKiloBytes(int kiloBytes) {
+		int originalKB = kiloBytes;
+		int megaBytes = 0;
+		
+		if (kiloBytes < 0) {
+			return "Invalid Value";
+		}
+		else {
+			while (kiloBytes > 1024) {
+				megaBytes++;
+				kiloBytes-=1024;
+			}
+		}
+			
+		return originalKB + " KB = " + megaBytes + " MB and " + kiloBytes + " KB";
 	}
 
 	/**
@@ -97,8 +115,18 @@ public class EvaluationService {
 	 * If the hourOfDay parameter is less than 0 or greater than 23, return false.
 	 */
 	public boolean shouldWakeUp(boolean isBarking, int hourOfDay) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		if (!isBarking) {
+			return false;
+		}
+		else if (hourOfDay < 0 || hourOfDay > 23) {
+			return false;
+		}
+		else if (hourOfDay > 8 && hourOfDay < 22) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	/**
@@ -113,8 +141,13 @@ public class EvaluationService {
 	 * Otherwise, return false;
 	 */
 	public boolean areEqualByThreeDecimalPlaces(double firstNum, double secondNum) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		double scale = Math.pow(10, 3);
+		if (firstNum*scale == secondNum*scale) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
