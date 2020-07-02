@@ -522,8 +522,17 @@ public class EvaluationService {
 	 * Note: As this exercise only deals with telephone numbers used in
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
-	public String cleanPhoneNumber(String string) {
-		return null;
+	public String cleanPhoneNumber(String string) throws IllegalArgumentException {
+		String phone = string.replaceAll("[^0-9]", "");
+		if (phone.charAt(0) == '1') {
+			phone = phone.substring(1);
+		}
+		
+		if (phone.length() != 10) {
+			throw new IllegalArgumentException();
+		}
+		
+		return phone;
 	}
 
 	/**
