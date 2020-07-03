@@ -690,7 +690,11 @@ public class EvaluationService {
 	 */
 	
 	public int[] threeLuckyNumbers() {
-		return null;
+		int [] numbers = new int[3];
+		for (int i = 0; i < numbers.length; i++) {
+			numbers[i] = (int) (Math.random() * 100) + 1;
+		}
+		return numbers;
 	}
 	
 	/*
@@ -704,6 +708,7 @@ public class EvaluationService {
 	 */
 	
 	public int guessingGame(int x, int y) {
-		return 0;
+		int num = (int) (Math.random() * y) + x;
+		return num;
 	}
 }
