@@ -623,9 +623,39 @@ public class EvaluationService {
 	 * If your language provides methods in the standard library to deal with prime
 	 * numbers, pretend they don't exist and implement them yourself.
 	 */
-	public int calculateNthPrime(int k) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+	public int calculateNthPrime(int k) throws IllegalArgumentException{
+			if (k == 0 ) {
+				throw new IllegalArgumentException();
+			}
+		
+			int lastPrime = 0; 
+			int primesFound = 0;
+			int currentNum = 2;
+			do {
+				if (isPrime(currentNum)) {
+					lastPrime = currentNum;
+					primesFound++;
+					/*
+					 * System.out.println(currentNum + " is a Prime Number. Primes Found: " +
+					 * primesFound); } else { System.out.println(currentNum +
+					 * " is not a Prime Number. Primes Found: " + primesFound);
+					 */
+				}
+				currentNum++;
+			} while (primesFound < k);	
+		return lastPrime;
+	}
+	
+	public static boolean isPrime(int num) {
+		if (num <= 1) {
+			return false;
+		}
+		for (int i = 2; i <= Math.sqrt(num); i++) {
+			if (num % i == 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
