@@ -1,5 +1,8 @@
 package com.revature.eval.java.core;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -523,7 +526,9 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) throws IllegalArgumentException {
+		
 		String phone = string.replaceAll("[^0-9]", "");
+		
 		if (phone.charAt(0) == '1') {
 			phone = phone.substring(1);
 		}
@@ -543,9 +548,21 @@ public class EvaluationService {
 	 * For example for the input "olly olly in come free" olly: 2 in: 1 come: 1
 	 * free: 1
 	 */
+	//TODO: Solve newline (\n) issue
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String[] splat = string.split("[^A-Za-z]");
+		HashMap<String, Integer> wordCount = new HashMap<String, Integer>();
+		for (int i = 0; i < splat.length; i++) {
+			if (wordCount.containsKey(splat[i])) {
+				int currentCount = wordCount.get(splat[i]);
+				currentCount++;
+				wordCount.replace(splat[i], currentCount);
+			}
+			else {
+				wordCount.put(splat[i], 1);
+			}
+		}
+		return wordCount;
 	}
 
 	/**
@@ -563,7 +580,23 @@ public class EvaluationService {
 	 * a number is an Armstrong number.
 	 */
 	public boolean isArmstrongNumber(int input) {
-		return false;
+		List<Integer> digits = new ArrayList<Integer>();
+		int num = input;
+		int test = 0;
+	    while(input > 0) {
+	        digits.add(input % 10);
+	        input /= 10;
+	    } 
+	    for (int i = 0; i < digits.size(); i++)
+	    {
+	    	test += (int) Math.pow(digits.get(i),digits.size());
+	    }
+	    if (test == num) {
+	    	return true;
+	    }
+	    else {
+	    	return false;
+	    }
 	}
 
 	/**
@@ -608,8 +641,15 @@ public class EvaluationService {
 	 * insensitive. Input will not contain non-ASCII symbols.
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		boolean containsAllLetters = true;
+		string = string.toLowerCase();
+		
+		for (char i = 'a'; i <= 'z'; i++) {
+			if (string.indexOf(i) == -1) {
+				containsAllLetters = false;
+			}
+		}
+		return containsAllLetters;
 	}
 
 	/**
@@ -624,7 +664,19 @@ public class EvaluationService {
 	 * The sum of these multiples is 78.
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		return 0;
+		int sum = 0;
+		List<Integer> multiples = new LinkedList<Integer>();
+		for (int j = 0; j < set.length; j++) {
+			for (int k = 0; k < i; k++) {
+				if (k % set[j] == 0) {
+					if (!multiples.contains(k)) {
+						sum+=k;
+						multiples.add(k);
+					}
+				}
+			}
+		}
+		return sum;
 	}
 	
 	/**
