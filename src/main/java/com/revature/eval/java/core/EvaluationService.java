@@ -1,6 +1,8 @@
 package com.revature.eval.java.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -143,10 +145,8 @@ public class EvaluationService {
 	 * 
 	 * Otherwise, return false;
 	 */
-	//TODO: Fix
 	public boolean areEqualByThreeDecimalPlaces(double firstNum, double secondNum) {
-		double scale = Math.pow(10, 3);
-		if (firstNum*scale == secondNum*scale) {
+		if ((int)(firstNum*1000) == (int)(secondNum*1000)) {
 			return true;
 		}
 		else {
@@ -302,7 +302,6 @@ public class EvaluationService {
 	 * If the number is negative then the method needs to return -1 to indicate an
 	 * invalid value.
 	 */
-	//TODO: Fix
 	public int sumFirstAndLastDigit(int num) {
 		int first, last, sum;
 		if (num < 0) {
@@ -310,9 +309,11 @@ public class EvaluationService {
 		}
 		else {
 			String numString = String.valueOf(num);
-			first = (int) (numString.charAt(0));
-			last = (int) (numString.charAt(numString.length()-1));
+			//System.out.println(num + "'s string value is " + numString);
+			first = Character.getNumericValue(numString.charAt(0));
+			last = Character.getNumericValue(numString.charAt(numString.length()-1));
 			sum = first + last;
+			//System.out.println(first + " + " + last + " = " + sum);
 		}
 		return sum;
 	}
@@ -548,7 +549,6 @@ public class EvaluationService {
 	 * For example for the input "olly olly in come free" olly: 2 in: 1 come: 1
 	 * free: 1
 	 */
-	//TODO: Solve newline (\n) issue
 	public Map<String, Integer> wordCount(String string) {
 		String[] splat = string.split("[^A-Za-z]");
 		HashMap<String, Integer> wordCount = new HashMap<String, Integer>();
@@ -557,6 +557,9 @@ public class EvaluationService {
 				int currentCount = wordCount.get(splat[i]);
 				currentCount++;
 				wordCount.replace(splat[i], currentCount);
+			}
+			else if (splat[i].length() < 1) {
+				
 			}
 			else {
 				wordCount.put(splat[i], 1);
@@ -608,8 +611,32 @@ public class EvaluationService {
 	 * Note that 1 is not a prime number.
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		List<Long> primeFactors = new ArrayList<Long>();
+		for (long i = 2; i <= l; i++) {
+			if (l % i == 0) {
+				if (isPrime(i)) {
+					//is a Prime Factor
+					primeFactors.add(i);
+					l /= i;
+					if (isPrime(l)) {
+						//if l has become prime, there are no further factors
+						primeFactors.add(l);
+						Collections.sort(primeFactors);
+						return primeFactors;
+					}
+					else {
+						//l is not prime
+						continue;
+					}
+				}
+				else {
+					//is a Factor, but not prime
+					primeFactors.addAll(calculatePrimeFactorsOf(l));
+				}
+			}
+		}
+		Collections.sort(primeFactors);
+		return primeFactors;
 	}
 
 	/**
@@ -646,7 +673,7 @@ public class EvaluationService {
 		return lastPrime;
 	}
 	
-	public static boolean isPrime(int num) {
+	public static boolean isPrime(long num) {
 		if (num <= 1) {
 			return false;
 		}
